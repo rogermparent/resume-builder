@@ -5,10 +5,19 @@
  * See: https://www.gatsbyjs.com/docs/how-to/querying-data/use-static-query/
  */
 
-import * as React from "react"
 import { useStaticQuery, graphql } from "gatsby"
+import React, { ReactNode } from "react"
+import { Fonts } from "./Fonts"
 
-function Seo({ description, title, children }) {
+function Seo({
+  description,
+  title,
+  children,
+}: {
+  description?: string
+  title: string
+  children?: ReactNode
+}) {
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -28,7 +37,8 @@ function Seo({ description, title, children }) {
 
   return (
     <>
-      <title>{defaultTitle ? `${title} | ${defaultTitle}` : title}</title>
+      <Fonts />
+      <title>{title || defaultTitle}</title>
       <meta name="description" content={metaDescription} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={metaDescription} />
