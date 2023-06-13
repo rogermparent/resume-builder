@@ -6,3 +6,4 @@ globalStyle("body, html, #___gatsby, #gatsby-focus-wrapper", {
   height: "100%",
 })
 globalStyle("*", { padding: 0, margin: 0, boxSizing: "border-box" })
+globalStyle("a", { color: "inherit" })

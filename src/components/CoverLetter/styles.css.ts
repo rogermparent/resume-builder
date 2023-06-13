@@ -6,7 +6,6 @@ export const coverLetter = sprinkles({
   display: "flex",
   flexDirection: "column",
   flexWrap: "nowrap",
-  minHeight: "screen",
   color: "body",
   backgroundColor: "background",
   fontFamily: "body",
@@ -40,6 +39,10 @@ export const careerObjective = sprinkles({
 })
 export const bodySection = sprinkles({
   width: "full",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
 })
 export const innerBodySection = sprinkles({
   marginX: 3,

@@ -1,7 +1,7 @@
 import { graphql } from "gatsby"
 
 export const query = graphql`
-  fragment ResumeView on ResumesJson {
+  fragment ResumeView on Resume {
     careerObjective
     company
     summary

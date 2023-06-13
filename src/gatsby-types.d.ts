@@ -1756,6 +1756,7 @@ type Query = {
   readonly allImageSharp: ImageSharpConnection;
   readonly allMdx: MdxConnection;
   readonly allMdxFrontmatter: MdxFrontmatterConnection;
+  readonly allResume: ResumeConnection;
   readonly allResumesJson: ResumesJsonConnection;
   readonly allSite: SiteConnection;
   readonly allSiteBuildMetadata: SiteBuildMetadataConnection;
@@ -1768,6 +1769,7 @@ type Query = {
   readonly imageSharp: Maybe<ImageSharp>;
   readonly mdx: Maybe<Mdx>;
   readonly mdxFrontmatter: Maybe<MdxFrontmatter>;
+  readonly resume: Maybe<Resume>;
   readonly resumesJson: Maybe<ResumesJson>;
   readonly site: Maybe<Site>;
   readonly siteBuildMetadata: Maybe<SiteBuildMetadata>;
@@ -1822,6 +1824,14 @@ type Query_allMdxFrontmatterArgs = {
   limit: InputMaybe<Scalars['Int']>;
   skip: InputMaybe<Scalars['Int']>;
   sort: InputMaybe<ReadonlyArray<InputMaybe<MdxFrontmatterSortInput>>>;
+};
+
+
+type Query_allResumeArgs = {
+  filter: InputMaybe<ResumeFilterInput>;
+  limit: InputMaybe<Scalars['Int']>;
+  skip: InputMaybe<Scalars['Int']>;
+  sort: InputMaybe<ReadonlyArray<InputMaybe<ResumeSortInput>>>;
 };
 
 
@@ -2013,18 +2023,37 @@ type Query_mdxFrontmatterArgs = {
 };
 
 
-type Query_resumesJsonArgs = {
+type Query_resumeArgs = {
   applicant: InputMaybe<FileFilterInput>;
   careerObjective: InputMaybe<StringQueryOperatorInput>;
   children: InputMaybe<NodeFilterListInput>;
   company: InputMaybe<StringQueryOperatorInput>;
+  date: InputMaybe<StringQueryOperatorInput>;
   education: InputMaybe<ResumeEducationFilterListInput>;
+  filename: InputMaybe<StringQueryOperatorInput>;
   gatsbyPath: InputMaybe<StringQueryOperatorInput>;
   id: InputMaybe<StringQueryOperatorInput>;
   internal: InputMaybe<InternalFilterInput>;
   jobExperience: InputMaybe<ResumeJobExperienceFilterListInput>;
+  modifiedTime: InputMaybe<DateQueryOperatorInput>;
   parent: InputMaybe<NodeFilterInput>;
   projects: InputMaybe<ResumeProjectFilterListInput>;
+  skills: InputMaybe<StringQueryOperatorInput>;
+  summary: InputMaybe<StringQueryOperatorInput>;
+};
+
+
+type Query_resumesJsonArgs = {
+  applicant: InputMaybe<StringQueryOperatorInput>;
+  careerObjective: InputMaybe<StringQueryOperatorInput>;
+  children: InputMaybe<NodeFilterListInput>;
+  company: InputMaybe<StringQueryOperatorInput>;
+  education: InputMaybe<ResumesJsonEducationFilterListInput>;
+  id: InputMaybe<StringQueryOperatorInput>;
+  internal: InputMaybe<InternalFilterInput>;
+  jobExperience: InputMaybe<ResumesJsonJobExperienceFilterListInput>;
+  parent: InputMaybe<NodeFilterInput>;
+  projects: InputMaybe<ResumesJsonProjectsFilterListInput>;
   skills: InputMaybe<StringQueryOperatorInput>;
   summary: InputMaybe<StringQueryOperatorInput>;
 };
@@ -2102,6 +2131,83 @@ type Query_sitePluginArgs = {
   version: InputMaybe<StringQueryOperatorInput>;
 };
 
+type Resume = Node & {
+  readonly applicant: File;
+  readonly careerObjective: Maybe<Scalars['String']>;
+  readonly children: ReadonlyArray<Node>;
+  readonly company: Maybe<Scalars['String']>;
+  readonly date: Maybe<Scalars['String']>;
+  readonly education: Maybe<ReadonlyArray<ResumeEducation>>;
+  readonly filename: Maybe<Scalars['String']>;
+  readonly gatsbyPath: Maybe<Scalars['String']>;
+  readonly id: Scalars['ID'];
+  readonly internal: Internal;
+  readonly jobExperience: Maybe<ReadonlyArray<ResumeJobExperience>>;
+  readonly modifiedTime: Maybe<Scalars['Date']>;
+  readonly parent: Maybe<Node>;
+  readonly projects: Maybe<ReadonlyArray<ResumeProject>>;
+  readonly skills: Maybe<ReadonlyArray<Scalars['String']>>;
+  readonly summary: Maybe<Scalars['String']>;
+};
+
+
+type Resume_gatsbyPathArgs = {
+  filePath: InputMaybe<Scalars['String']>;
+};
+
+
+type Resume_modifiedTimeArgs = {
+  difference: InputMaybe<Scalars['String']>;
+  formatString: InputMaybe<Scalars['String']>;
+  fromNow: InputMaybe<Scalars['Boolean']>;
+  locale: InputMaybe<Scalars['String']>;
+};
+
+type ResumeConnection = {
+  readonly distinct: ReadonlyArray<Scalars['String']>;
+  readonly edges: ReadonlyArray<ResumeEdge>;
+  readonly group: ReadonlyArray<ResumeGroupConnection>;
+  readonly max: Maybe<Scalars['Float']>;
+  readonly min: Maybe<Scalars['Float']>;
+  readonly nodes: ReadonlyArray<Resume>;
+  readonly pageInfo: PageInfo;
+  readonly sum: Maybe<Scalars['Float']>;
+  readonly totalCount: Scalars['Int'];
+};
+
+
+type ResumeConnection_distinctArgs = {
+  field: ResumeFieldSelector;
+};
+
+
+type ResumeConnection_groupArgs = {
+  field: ResumeFieldSelector;
+  limit: InputMaybe<Scalars['Int']>;
+  skip: InputMaybe<Scalars['Int']>;
+};
+
+
+type ResumeConnection_maxArgs = {
+  field: ResumeFieldSelector;
+};
+
+
+type ResumeConnection_minArgs = {
+  field: ResumeFieldSelector;
+};
+
+
+type ResumeConnection_sumArgs = {
+  field: ResumeFieldSelector;
+};
+
+type ResumeEdge = {
+  readonly next: Maybe<Resume>;
+  readonly node: Resume;
+  readonly previous: Maybe<Resume>;
+};
+
 type ResumeEducation = {
   readonly achievement: Maybe<Scalars['String']>;
   readonly endDate: Maybe<Scalars['String']>;
@@ -2136,6 +2242,85 @@ type ResumeEducationSortInput = {
   readonly school: InputMaybe<SortOrderEnum>;
   readonly slug: InputMaybe<SortOrderEnum>;
   readonly startDate: InputMaybe<SortOrderEnum>;
+};
+
+type ResumeFieldSelector = {
+  readonly applicant: InputMaybe<FileFieldSelector>;
+  readonly careerObjective: InputMaybe<FieldSelectorEnum>;
+  readonly children: InputMaybe<NodeFieldSelector>;
+  readonly company: InputMaybe<FieldSelectorEnum>;
+  readonly date: InputMaybe<FieldSelectorEnum>;
+  readonly education: InputMaybe<ResumeEducationFieldSelector>;
+  readonly filename: InputMaybe<FieldSelectorEnum>;
+  readonly gatsbyPath: InputMaybe<FieldSelectorEnum>;
+  readonly id: InputMaybe<FieldSelectorEnum>;
+  readonly internal: InputMaybe<InternalFieldSelector>;
+  readonly jobExperience: InputMaybe<ResumeJobExperienceFieldSelector>;
+  readonly modifiedTime: InputMaybe<FieldSelectorEnum>;
+  readonly parent: InputMaybe<NodeFieldSelector>;
+  readonly projects: InputMaybe<ResumeProjectFieldSelector>;
+  readonly skills: InputMaybe<FieldSelectorEnum>;
+  readonly summary: InputMaybe<FieldSelectorEnum>;
+};
+
+type ResumeFilterInput = {
+  readonly applicant: InputMaybe<FileFilterInput>;
+  readonly careerObjective: InputMaybe<StringQueryOperatorInput>;
+  readonly children: InputMaybe<NodeFilterListInput>;
+  readonly company: InputMaybe<StringQueryOperatorInput>;
+  readonly date: InputMaybe<StringQueryOperatorInput>;
+  readonly education: InputMaybe<ResumeEducationFilterListInput>;
+  readonly filename: InputMaybe<StringQueryOperatorInput>;
+  readonly gatsbyPath: InputMaybe<StringQueryOperatorInput>;
+  readonly id: InputMaybe<StringQueryOperatorInput>;
+  readonly internal: InputMaybe<InternalFilterInput>;
+  readonly jobExperience: InputMaybe<ResumeJobExperienceFilterListInput>;
+  readonly modifiedTime: InputMaybe<DateQueryOperatorInput>;
+  readonly parent: InputMaybe<NodeFilterInput>;
+  readonly projects: InputMaybe<ResumeProjectFilterListInput>;
+  readonly skills: InputMaybe<StringQueryOperatorInput>;
+  readonly summary: InputMaybe<StringQueryOperatorInput>;
+};
+
+type ResumeGroupConnection = {
+  readonly distinct: ReadonlyArray<Scalars['String']>;
+  readonly edges: ReadonlyArray<ResumeEdge>;
+  readonly field: Scalars['String'];
+  readonly fieldValue: Maybe<Scalars['String']>;
+  readonly group: ReadonlyArray<ResumeGroupConnection>;
+  readonly max: Maybe<Scalars['Float']>;
+  readonly min: Maybe<Scalars['Float']>;
+  readonly nodes: ReadonlyArray<Resume>;
+  readonly pageInfo: PageInfo;
+  readonly sum: Maybe<Scalars['Float']>;
+  readonly totalCount: Scalars['Int'];
+};
+
+
+type ResumeGroupConnection_distinctArgs = {
+  field: ResumeFieldSelector;
+};
+
+
+type ResumeGroupConnection_groupArgs = {
+  field: ResumeFieldSelector;
+  limit: InputMaybe<Scalars['Int']>;
+  skip: InputMaybe<Scalars['Int']>;
+};
+
+
+type ResumeGroupConnection_maxArgs = {
+  field: ResumeFieldSelector;
+};
+
+
+type ResumeGroupConnection_minArgs = {
+  field: ResumeFieldSelector;
+};
+
+
+type ResumeGroupConnection_sumArgs = {
+  field: ResumeFieldSelector;
 };
 
 type ResumeJobExperience = {
@@ -2184,7 +2369,7 @@ type ResumeProject = {
   readonly name: Maybe<Scalars['String']>;
   readonly slug: Scalars['String'];
   readonly startDate: Maybe<Scalars['String']>;
-  readonly url: Maybe<Scalars['String']>;
+  readonly url: Maybe<ReadonlyArray<Maybe<Scalars['String']>>>;
 };
 
 type ResumeProjectFieldSelector = {
@@ -2218,25 +2403,38 @@ type ResumeProjectSortInput = {
   readonly url: InputMaybe<SortOrderEnum>;
 };
 
+type ResumeSortInput = {
+  readonly applicant: InputMaybe<FileSortInput>;
+  readonly careerObjective: InputMaybe<SortOrderEnum>;
+  readonly children: InputMaybe<NodeSortInput>;
+  readonly company: InputMaybe<SortOrderEnum>;
+  readonly date: InputMaybe<SortOrderEnum>;
+  readonly education: InputMaybe<ResumeEducationSortInput>;
+  readonly filename: InputMaybe<SortOrderEnum>;
+  readonly gatsbyPath: InputMaybe<SortOrderEnum>;
+  readonly id: InputMaybe<SortOrderEnum>;
+  readonly internal: InputMaybe<InternalSortInput>;
+  readonly jobExperience: InputMaybe<ResumeJobExperienceSortInput>;
+  readonly modifiedTime: InputMaybe<SortOrderEnum>;
+  readonly parent: InputMaybe<NodeSortInput>;
+  readonly projects: InputMaybe<ResumeProjectSortInput>;
+  readonly skills: InputMaybe<SortOrderEnum>;
+  readonly summary: InputMaybe<SortOrderEnum>;
+};
+
 type ResumesJson = Node & {
-  readonly applicant: File;
+  readonly applicant: Maybe<Scalars['String']>;
   readonly careerObjective: Maybe<Scalars['String']>;
   readonly children: ReadonlyArray<Node>;
   readonly company: Maybe<Scalars['String']>;
-  readonly education: Maybe<ReadonlyArray<ResumeEducation>>;
-  readonly gatsbyPath: Maybe<Scalars['String']>;
+  readonly education: Maybe<ReadonlyArray<Maybe<ResumesJsonEducation>>>;
   readonly id: Scalars['ID'];
   readonly internal: Internal;
-  readonly jobExperience: Maybe<ReadonlyArray<ResumeJobExperience>>;
+  readonly jobExperience: Maybe<ReadonlyArray<Maybe<ResumesJsonJobExperience>>>;
   readonly parent: Maybe<Node>;
-  readonly projects: Maybe<ReadonlyArray<ResumeProject>>;
-  readonly skills: Maybe<ReadonlyArray<Scalars['String']>>;
+  readonly projects: Maybe<ReadonlyArray<Maybe<ResumesJsonProjects>>>;
+  readonly skills: Maybe<ReadonlyArray<Maybe<Scalars['String']>>>;
   readonly summary: Maybe<Scalars['String']>;
-};
-
-
-type ResumesJson_gatsbyPathArgs = {
-  filePath: InputMaybe<Scalars['String']>;
 };
 
 type ResumesJsonConnection = {
@@ -2284,34 +2482,80 @@ type ResumesJsonEdge = {
   readonly previous: Maybe<ResumesJson>;
 };
 
+type ResumesJsonEducation = {
+  readonly achievement: Maybe<Scalars['String']>;
+  readonly endDate: Maybe<Scalars['Date']>;
+  readonly school: Maybe<Scalars['String']>;
+  readonly startDate: Maybe<Scalars['Date']>;
+};
+
+
+type ResumesJsonEducation_endDateArgs = {
+  difference: InputMaybe<Scalars['String']>;
+  formatString: InputMaybe<Scalars['String']>;
+  fromNow: InputMaybe<Scalars['Boolean']>;
+  locale: InputMaybe<Scalars['String']>;
+};
+
+
+type ResumesJsonEducation_startDateArgs = {
+  difference: InputMaybe<Scalars['String']>;
+  formatString: InputMaybe<Scalars['String']>;
+  fromNow: InputMaybe<Scalars['Boolean']>;
+  locale: InputMaybe<Scalars['String']>;
+};
+
+type ResumesJsonEducationFieldSelector = {
+  readonly achievement: InputMaybe<FieldSelectorEnum>;
+  readonly endDate: InputMaybe<FieldSelectorEnum>;
+  readonly school: InputMaybe<FieldSelectorEnum>;
+  readonly startDate: InputMaybe<FieldSelectorEnum>;
+};
+
+type ResumesJsonEducationFilterInput = {
+  readonly achievement: InputMaybe<StringQueryOperatorInput>;
+  readonly endDate: InputMaybe<DateQueryOperatorInput>;
+  readonly school: InputMaybe<StringQueryOperatorInput>;
+  readonly startDate: InputMaybe<DateQueryOperatorInput>;
+};
+
+type ResumesJsonEducationFilterListInput = {
+  readonly elemMatch: InputMaybe<ResumesJsonEducationFilterInput>;
+};
+
+type ResumesJsonEducationSortInput = {
+  readonly achievement: InputMaybe<SortOrderEnum>;
+  readonly endDate: InputMaybe<SortOrderEnum>;
+  readonly school: InputMaybe<SortOrderEnum>;
+  readonly startDate: InputMaybe<SortOrderEnum>;
+};
+
 type ResumesJsonFieldSelector = {
-  readonly applicant: InputMaybe<FileFieldSelector>;
+  readonly applicant: InputMaybe<FieldSelectorEnum>;
   readonly careerObjective: InputMaybe<FieldSelectorEnum>;
   readonly children: InputMaybe<NodeFieldSelector>;
   readonly company: InputMaybe<FieldSelectorEnum>;
-  readonly education: InputMaybe<ResumeEducationFieldSelector>;
-  readonly gatsbyPath: InputMaybe<FieldSelectorEnum>;
+  readonly education: InputMaybe<ResumesJsonEducationFieldSelector>;
   readonly id: InputMaybe<FieldSelectorEnum>;
   readonly internal: InputMaybe<InternalFieldSelector>;
-  readonly jobExperience: InputMaybe<ResumeJobExperienceFieldSelector>;
+  readonly jobExperience: InputMaybe<ResumesJsonJobExperienceFieldSelector>;
   readonly parent: InputMaybe<NodeFieldSelector>;
-  readonly projects: InputMaybe<ResumeProjectFieldSelector>;
+  readonly projects: InputMaybe<ResumesJsonProjectsFieldSelector>;
   readonly skills: InputMaybe<FieldSelectorEnum>;
   readonly summary: InputMaybe<FieldSelectorEnum>;
 };
 
 type ResumesJsonFilterInput = {
-  readonly applicant: InputMaybe<FileFilterInput>;
+  readonly applicant: InputMaybe<StringQueryOperatorInput>;
   readonly careerObjective: InputMaybe<StringQueryOperatorInput>;
   readonly children: InputMaybe<NodeFilterListInput>;
   readonly company: InputMaybe<StringQueryOperatorInput>;
-  readonly education: InputMaybe<ResumeEducationFilterListInput>;
-  readonly gatsbyPath: InputMaybe<StringQueryOperatorInput>;
+  readonly education: InputMaybe<ResumesJsonEducationFilterListInput>;
   readonly id: InputMaybe<StringQueryOperatorInput>;
   readonly internal: InputMaybe<InternalFilterInput>;
-  readonly jobExperience: InputMaybe<ResumeJobExperienceFilterListInput>;
+  readonly jobExperience: InputMaybe<ResumesJsonJobExperienceFilterListInput>;
   readonly parent: InputMaybe<NodeFilterInput>;
-  readonly projects: InputMaybe<ResumeProjectFilterListInput>;
+  readonly projects: InputMaybe<ResumesJsonProjectsFilterListInput>;
   readonly skills: InputMaybe<StringQueryOperatorInput>;
   readonly summary: InputMaybe<StringQueryOperatorInput>;
 };
@@ -2361,18 +2605,89 @@ type ResumesJsonGroupConnection_sumArgs = {
   field: ResumesJsonFieldSelector;
 };
 
+type ResumesJsonJobExperience = {
+  readonly company: Maybe<Scalars['String']>;
+  readonly duties: Maybe<ReadonlyArray<Maybe<Scalars['String']>>>;
+  readonly endDate: Maybe<Scalars['String']>;
+  readonly startDate: Maybe<Scalars['String']>;
+  readonly title: Maybe<Scalars['String']>;
+};
+
+type ResumesJsonJobExperienceFieldSelector = {
+  readonly company: InputMaybe<FieldSelectorEnum>;
+  readonly duties: InputMaybe<FieldSelectorEnum>;
+  readonly endDate: InputMaybe<FieldSelectorEnum>;
+  readonly startDate: InputMaybe<FieldSelectorEnum>;
+  readonly title: InputMaybe<FieldSelectorEnum>;
+};
+
+type ResumesJsonJobExperienceFilterInput = {
+  readonly company: InputMaybe<StringQueryOperatorInput>;
+  readonly duties: InputMaybe<StringQueryOperatorInput>;
+  readonly endDate: InputMaybe<StringQueryOperatorInput>;
+  readonly startDate: InputMaybe<StringQueryOperatorInput>;
+  readonly title: InputMaybe<StringQueryOperatorInput>;
+};
+
+type ResumesJsonJobExperienceFilterListInput = {
+  readonly elemMatch: InputMaybe<ResumesJsonJobExperienceFilterInput>;
+};
+
+type ResumesJsonJobExperienceSortInput = {
+  readonly company: InputMaybe<SortOrderEnum>;
+  readonly duties: InputMaybe<SortOrderEnum>;
+  readonly endDate: InputMaybe<SortOrderEnum>;
+  readonly startDate: InputMaybe<SortOrderEnum>;
+  readonly title: InputMaybe<SortOrderEnum>;
+};
+
+type ResumesJsonProjects = {
+  readonly description: Maybe<Scalars['String']>;
+  readonly endDate: Maybe<Scalars['String']>;
+  readonly name: Maybe<Scalars['String']>;
+  readonly startDate: Maybe<Scalars['String']>;
+  readonly url: Maybe<ReadonlyArray<Maybe<Scalars['String']>>>;
+};
+
+type ResumesJsonProjectsFieldSelector = {
+  readonly description: InputMaybe<FieldSelectorEnum>;
+  readonly endDate: InputMaybe<FieldSelectorEnum>;
+  readonly name: InputMaybe<FieldSelectorEnum>;
+  readonly startDate: InputMaybe<FieldSelectorEnum>;
+  readonly url: InputMaybe<FieldSelectorEnum>;
+};
+
+type ResumesJsonProjectsFilterInput = {
+  readonly description: InputMaybe<StringQueryOperatorInput>;
+  readonly endDate: InputMaybe<StringQueryOperatorInput>;
+  readonly name: InputMaybe<StringQueryOperatorInput>;
+  readonly startDate: InputMaybe<StringQueryOperatorInput>;
+  readonly url: InputMaybe<StringQueryOperatorInput>;
+};
+
+type ResumesJsonProjectsFilterListInput = {
+  readonly elemMatch: InputMaybe<ResumesJsonProjectsFilterInput>;
+};
+
+type ResumesJsonProjectsSortInput = {
+  readonly description: InputMaybe<SortOrderEnum>;
+  readonly endDate: InputMaybe<SortOrderEnum>;
+  readonly name: InputMaybe<SortOrderEnum>;
+  readonly startDate: InputMaybe<SortOrderEnum>;
+  readonly url: InputMaybe<SortOrderEnum>;
+};
+
 type ResumesJsonSortInput = {
-  readonly applicant: InputMaybe<FileSortInput>;
+  readonly applicant: InputMaybe<SortOrderEnum>;
   readonly careerObjective: InputMaybe<SortOrderEnum>;
   readonly children: InputMaybe<NodeSortInput>;
   readonly company: InputMaybe<SortOrderEnum>;
-  readonly education: InputMaybe<ResumeEducationSortInput>;
-  readonly gatsbyPath: InputMaybe<SortOrderEnum>;
+  readonly education: InputMaybe<ResumesJsonEducationSortInput>;
   readonly id: InputMaybe<SortOrderEnum>;
   readonly internal: InputMaybe<InternalSortInput>;
-  readonly jobExperience: InputMaybe<ResumeJobExperienceSortInput>;
+  readonly jobExperience: InputMaybe<ResumesJsonJobExperienceSortInput>;
   readonly parent: InputMaybe<NodeSortInput>;
-  readonly projects: InputMaybe<ResumeProjectSortInput>;
+  readonly projects: InputMaybe<ResumesJsonProjectsSortInput>;
   readonly skills: InputMaybe<SortOrderEnum>;
   readonly summary: InputMaybe<SortOrderEnum>;
 };
@@ -3215,7 +3530,7 @@ type ResumeEducationFragment = { readonly achievement: string | null, readonly e
 type ResumeIndexQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type ResumeIndexQuery = { readonly resumes: { readonly nodes: ReadonlyArray<{ readonly parent: { readonly name: string } | {} | null }> }, readonly coverLetters: { readonly nodes: ReadonlyArray<{ readonly id: string, readonly parent: { readonly name: string } | {} | null, readonly internal: { readonly contentFilePath: string | null } }> } };
+type ResumeIndexQuery = { readonly resumes: { readonly nodes: ReadonlyArray<{ readonly filename: string | null, readonly modifiedTime: string | null }> }, readonly coverLetters: { readonly nodes: ReadonlyArray<{ readonly id: string, readonly parent: { readonly name: string } | {} | null, readonly internal: { readonly contentFilePath: string | null } }> } };
 
 type ResumeJobExperienceFragment = { readonly company: string | null, readonly duties: ReadonlyArray<string> | null, readonly endDate: string | null, readonly startDate: string | null, readonly title: string | null };
 
@@ -3224,16 +3539,11 @@ type ResumePageQueryVariables = Exact<{
 }>;
 
 
-type ResumePageQuery = { readonly resumesJson: { readonly careerObjective: string | null, readonly company: string | null, readonly summary: string | null, readonly skills: ReadonlyArray<string> | null, readonly applicant: { readonly childApplicantsJson: { readonly name: string | null, readonly phone: string | null, readonly email: string | null, readonly address: string | null, readonly github: string | null, readonly linkedin: string | null } | null }, readonly education: ReadonlyArray<{ readonly achievement: string | null, readonly endDate: string | null, readonly school: string | null, readonly startDate: string | null }> | null, readonly jobExperience: ReadonlyArray<{ readonly company: string | null, readonly duties: ReadonlyArray<string> | null, readonly endDate: string | null, readonly startDate: string | null, readonly title: string | null }> | null, readonly projects: ReadonlyArray<{ readonly description: string | null, readonly url: string | null, readonly name: string | null, readonly startDate: string | null, readonly endDate: string | null }> | null } | null };
+type ResumePageQuery = { readonly resume: { readonly filename: string | null, readonly careerObjective: string | null, readonly company: string | null, readonly summary: string | null, readonly skills: ReadonlyArray<string> | null, readonly applicant: { readonly childApplicantsJson: { readonly name: string | null, readonly phone: string | null, readonly email: string | null, readonly address: string | null, readonly github: string | null, readonly linkedin: string | null } | null }, readonly education: ReadonlyArray<{ readonly achievement: string | null, readonly endDate: string | null, readonly school: string | null, readonly startDate: string | null }> | null, readonly jobExperience: ReadonlyArray<{ readonly company: string | null, readonly duties: ReadonlyArray<string> | null, readonly endDate: string | null, readonly startDate: string | null, readonly title: string | null }> | null, readonly projects: ReadonlyArray<{ readonly description: string | null, readonly url: ReadonlyArray<string | null> | null, readonly name: string | null, readonly startDate: string | null, readonly endDate: string | null }> | null } | null };
 
-type ResumeProjectFragment = { readonly description: string | null, readonly url: string | null, readonly name: string | null, readonly startDate: string | null, readonly endDate: string | null };
+type ResumeProjectFragment = { readonly description: string | null, readonly url: ReadonlyArray<string | null> | null, readonly name: string | null, readonly startDate: string | null, readonly endDate: string | null };
 
-type ResumeViewFragment = { readonly careerObjective: string | null, readonly company: string | null, readonly summary: string | null, readonly skills: ReadonlyArray<string> | null, readonly applicant: { readonly childApplicantsJson: { readonly name: string | null, readonly phone: string | null, readonly email: string | null, readonly address: string | null, readonly github: string | null, readonly linkedin: string | null } | null }, readonly education: ReadonlyArray<{ readonly achievement: string | null, readonly endDate: string | null, readonly school: string | null, readonly startDate: string | null }> | null, readonly jobExperience: ReadonlyArray<{ readonly company: string | null, readonly duties: ReadonlyArray<string> | null, readonly endDate: string | null, readonly startDate: string | null, readonly title: string | null }> | null, readonly projects: ReadonlyArray<{ readonly description: string | null, readonly url: string | null, readonly name: string | null, readonly startDate: string | null, readonly endDate: string | null }> | null };
-
-type MdxPagesQueryQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-type MdxPagesQueryQuery = { readonly allMdx: { readonly nodes: ReadonlyArray<{ readonly id: string, readonly parent: { readonly name: string } | {} | null, readonly internal: { readonly contentFilePath: string | null } }> } };
+type ResumeViewFragment = { readonly careerObjective: string | null, readonly company: string | null, readonly summary: string | null, readonly skills: ReadonlyArray<string> | null, readonly applicant: { readonly childApplicantsJson: { readonly name: string | null, readonly phone: string | null, readonly email: string | null, readonly address: string | null, readonly github: string | null, readonly linkedin: string | null } | null }, readonly education: ReadonlyArray<{ readonly achievement: string | null, readonly endDate: string | null, readonly school: string | null, readonly startDate: string | null }> | null, readonly jobExperience: ReadonlyArray<{ readonly company: string | null, readonly duties: ReadonlyArray<string> | null, readonly endDate: string | null, readonly startDate: string | null, readonly title: string | null }> | null, readonly projects: ReadonlyArray<{ readonly description: string | null, readonly url: ReadonlyArray<string | null> | null, readonly name: string | null, readonly startDate: string | null, readonly endDate: string | null }> | null };
 
 
 }

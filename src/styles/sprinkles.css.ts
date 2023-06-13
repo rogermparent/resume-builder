@@ -37,9 +37,8 @@ export const colors = {
   ...solarized,
   black: "#000",
   white: "#FFF",
-  body: solarized.base01,
-  background: solarized.base3,
-  altBackground: solarized.base2,
+  body: "#000",
+  background: "#FFF",
 }
 
 const tailwindSpacing = {
@@ -157,9 +156,8 @@ const tailwindMinWidth = {
 
 const fontFamily = {
   ...tailwind.fonts,
-  heading:
-    "Roboto Condensed,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji",
-  body: '"Roboto Slab", serif',
+  heading: "sans-serif",
+  body: "serif",
 }
 
 const responsiveProperties = defineProperties({
@@ -192,6 +190,7 @@ const responsiveProperties = defineProperties({
       "space-evenly",
     ],
     alignItems: ["stretch", "flex-start", "center", "flex-end"],
+    whiteSpace: ["nowrap"],
     width: tailwindSpacing,
     height: tailwindSpacing,
     minWidth: tailwindMinWidth,

@@ -11,12 +11,12 @@ const ResumePage: React.FC<PageProps<Queries.ResumeIndexQuery>> = ({
     <div>
       <div>
         <h1>Resumes</h1>
-        {resumes.nodes.map(({ parent }) => {
-          const { name } = parent as { name: string }
+        {resumes.nodes.map(({ filename, modifiedTime }) => {
           return (
-            name && (
+            filename && (
               <div>
-                <Link to={`/resumes/${name}`}>{name}</Link>
+                <Link to={`/resumes/${filename}`}>{filename}</Link>{" "}
+                <span>{modifiedTime}</span>
               </div>
             )
           )
@@ -43,13 +43,10 @@ export const Head: HeadFC = () => <Seo title="Resumes" />
 
 export const query = graphql`
   query ResumeIndex {
-    resumes: allResumesJson {
+    resumes: allResume(sort: { modifiedTime: DESC }) {
       nodes {
-        parent {
-          ... on File {
-            name
-          }
-        }
+        filename
+        modifiedTime(fromNow: true)
       }
     }
     coverLetters: allMdx {

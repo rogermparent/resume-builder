@@ -11,7 +11,7 @@ const ContactInfo = ({
   linkedin,
 }: Queries.ApplicantDataFragment) => {
   return (
-    <div className={styles.defaultVerticalMargin}>
+    <div className={styles.contactList}>
       {address && (
         <div className={styles.contactListItem}>
           <span className={styles.contactIcon}>&#8962;</span>{" "}
@@ -90,23 +90,25 @@ const Education = ({
   return education && education.length > 0 ? (
     <div className={styles.sectionWrapper}>
       <h2 className={styles.sidebarSectionTitle}>Education</h2>
-      {education.map(({ achievement, school, startDate, endDate }, i) => (
-        <div key={i} className={styles.educationItem}>
-          {achievement && (
-            <h3 className={styles.educationAchievement}>{achievement}</h3>
-          )}
-          {school && (
-            <div className={styles.educationSchool}>
-              {school}
-              {startDate && (
-                <div>
-                  <DateSpan startDate={startDate} endDate={endDate} />
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      ))}
+      <ul className={styles.educationList}>
+        {education.map(({ achievement, school, startDate, endDate }, i) => (
+          <li key={i} className={styles.educationItem}>
+            {achievement && (
+              <h3 className={styles.educationAchievement}>{achievement}</h3>
+            )}
+            {school && (
+              <div className={styles.educationSchool}>
+                {school}
+                {startDate && (
+                  <div>
+                    <DateSpan startDate={startDate} endDate={endDate} />
+                  </div>
+                )}
+              </div>
+            )}
+          </li>
+        ))}
+      </ul>
     </div>
   ) : null
 }
@@ -135,7 +137,10 @@ const JobExperience = ({
               {duties && (
                 <ul className={styles.list}>
                   {duties.map(duty => (
-                    <li className={styles.experienceListItem}>{duty}</li>
+                    <li
+                      className={styles.experienceListDuty}
+                      dangerouslySetInnerHTML={{ __html: duty }}
+                    />
                   ))}
                 </ul>
               )}
@@ -145,6 +150,25 @@ const JobExperience = ({
       </div>
     </div>
   ) : null
+}
+
+const ProjectLink = ({ url }: { url: string }) => {
+  const githubResult = /^https:\/\/github.com\/(.*)/.exec(url)
+  if (githubResult) {
+    const repoName = githubResult[1]
+    return (
+      <>
+        <a href={url} target="_blank" className={styles.projectLink}>
+          <GithubIcon className={styles.projectIcon} /> {repoName}
+        </a>{" "}
+      </>
+    )
+  }
+  return (
+    <a href={url} target="_blank" className={styles.projectLink}>
+      {url}
+    </a>
+  )
 }
 
 const Projects = ({
@@ -160,13 +184,9 @@ const Projects = ({
           <li key={i} className={styles.projectsListItem}>
             <div className={styles.sectionTitleBlock}>
               <div className={styles.sectionItemTitle}>{name}</div>
-              {url && (
-                <div className={styles.sectionSubtitle}>
-                  <a href={url} target="_blank" className={styles.projectLink}>
-                    {url}
-                  </a>
-                </div>
-              )}
+              <div className={styles.sectionSubtitle}>
+                {url && url.map(url => <ProjectLink key={url} url={url} />)}
+              </div>
               {startDate && (
                 <div className={styles.sectionSubtitle}>
                   <DateSpan startDate={startDate} endDate={endDate} />
@@ -174,7 +194,10 @@ const Projects = ({
               )}
             </div>
             {description && (
-              <p className={styles.projectsListDescription}>{description}</p>
+              <div
+                className={styles.projectsListDescription}
+                dangerouslySetInnerHTML={{ __html: description }}
+              />
             )}
           </li>
         ))}
@@ -242,25 +265,29 @@ export const Resume = ({
                 linkedin={linkedin}
               />
             </div>
-            <div className={styles.sidebarMainSection}>
-              <Skills skills={skills} />
-              <Education education={education} />
-            </div>
+            <Skills skills={skills} />
+            <Education education={education} />
           </div>
         </div>
         <div className={styles.mainContainer}>
           <div className={styles.mainInnerContainer}>
-            <div className={styles.sectionWrapper}>
-              {careerObjective && (
-                <div className={styles.careerObjective}>{careerObjective}</div>
-              )}
+            <div className={styles.positionIndicator}>
               {company && (
-                <div className={styles.companyObjective}>{company}</div>
+                <span className={styles.companyObjective}>{company}</span>
+              )}
+
+              {careerObjective && (
+                <>
+                  <span>: </span>
+                  <span className={styles.careerObjective}>
+                    {careerObjective}
+                  </span>
+                </>
               )}
             </div>
             {summary && <span>{summary}</span>}
-            <JobExperience jobExperience={jobExperience} />
             <Projects projects={projects} />
+            <JobExperience jobExperience={jobExperience} />
           </div>
         </div>
       </div>

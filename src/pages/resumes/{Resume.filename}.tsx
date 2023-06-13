@@ -6,19 +6,20 @@ import Seo from "../../components/seo"
 import "./global.css"
 
 const ResumePage: React.FC<PageProps<Queries.ResumePageQuery>> = ({ data }) => {
-  const { resumesJson } = data
-  return <Resume resume={resumesJson} />
+  const { resume } = data
+  return <Resume resume={resume} />
 }
 
-export const Head: HeadFC<Queries.ResumePageQuery> = () => (
-  <Seo title="Resume" />
-)
+export const Head: HeadFC<Queries.ResumePageQuery> = ({ data }) => {
+  return <Seo title={data.resume?.filename || "untitled resume"} />
+}
 
 export default ResumePage
 
 export const query = graphql`
   query ResumePage($id: String!) {
-    resumesJson(id: { eq: $id }) {
+    resume(id: { eq: $id }) {
+      filename
       ...ResumeView
     }
   }
