@@ -46,6 +46,7 @@ type ApplicantsJson = Node & {
   readonly parent: Maybe<Node>;
   readonly phone: Maybe<Scalars['String']>;
   readonly slug: Scalars['String'];
+  readonly website: Maybe<Scalars['String']>;
 };
 
 type ApplicantsJsonConnection = {
@@ -105,6 +106,7 @@ type ApplicantsJsonFieldSelector = {
   readonly parent: InputMaybe<NodeFieldSelector>;
   readonly phone: InputMaybe<FieldSelectorEnum>;
   readonly slug: InputMaybe<FieldSelectorEnum>;
+  readonly website: InputMaybe<FieldSelectorEnum>;
 };
 
 type ApplicantsJsonFilterInput = {
@@ -119,6 +121,7 @@ type ApplicantsJsonFilterInput = {
   readonly parent: InputMaybe<NodeFilterInput>;
   readonly phone: InputMaybe<StringQueryOperatorInput>;
   readonly slug: InputMaybe<StringQueryOperatorInput>;
+  readonly website: InputMaybe<StringQueryOperatorInput>;
 };
 
 type ApplicantsJsonFilterListInput = {
@@ -178,6 +181,7 @@ type ApplicantsJsonSortInput = {
   readonly parent: InputMaybe<NodeSortInput>;
   readonly phone: InputMaybe<SortOrderEnum>;
   readonly slug: InputMaybe<SortOrderEnum>;
+  readonly website: InputMaybe<SortOrderEnum>;
 };
 
 type BlurredOptions = {
@@ -1895,6 +1899,7 @@ type Query_applicantsJsonArgs = {
   parent: InputMaybe<NodeFilterInput>;
   phone: InputMaybe<StringQueryOperatorInput>;
   slug: InputMaybe<StringQueryOperatorInput>;
+  website: InputMaybe<StringQueryOperatorInput>;
 };
 
 
@@ -3488,7 +3493,7 @@ type WebPOptions = {
   readonly quality: InputMaybe<Scalars['Int']>;
 };
 
-type ApplicantDataFragment = { readonly name: string | null, readonly phone: string | null, readonly email: string | null, readonly address: string | null, readonly github: string | null, readonly linkedin: string | null };
+type ApplicantDataFragment = { readonly name: string | null, readonly phone: string | null, readonly email: string | null, readonly address: string | null, readonly github: string | null, readonly linkedin: string | null, readonly website: string | null };
 
 type CoverLetterQueryVariables = Exact<{
   id: InputMaybe<Scalars['String']>;
@@ -3539,11 +3544,11 @@ type ResumePageQueryVariables = Exact<{
 }>;
 
 
-type ResumePageQuery = { readonly resume: { readonly filename: string | null, readonly careerObjective: string | null, readonly company: string | null, readonly summary: string | null, readonly skills: ReadonlyArray<string> | null, readonly applicant: { readonly childApplicantsJson: { readonly name: string | null, readonly phone: string | null, readonly email: string | null, readonly address: string | null, readonly github: string | null, readonly linkedin: string | null } | null }, readonly education: ReadonlyArray<{ readonly achievement: string | null, readonly endDate: string | null, readonly school: string | null, readonly startDate: string | null }> | null, readonly jobExperience: ReadonlyArray<{ readonly company: string | null, readonly duties: ReadonlyArray<string> | null, readonly endDate: string | null, readonly startDate: string | null, readonly title: string | null }> | null, readonly projects: ReadonlyArray<{ readonly description: string | null, readonly url: ReadonlyArray<string | null> | null, readonly name: string | null, readonly startDate: string | null, readonly endDate: string | null }> | null } | null };
+type ResumePageQuery = { readonly resume: { readonly filename: string | null, readonly careerObjective: string | null, readonly company: string | null, readonly summary: string | null, readonly skills: ReadonlyArray<string> | null, readonly applicant: { readonly childApplicantsJson: { readonly name: string | null, readonly phone: string | null, readonly email: string | null, readonly address: string | null, readonly github: string | null, readonly linkedin: string | null, readonly website: string | null } | null }, readonly education: ReadonlyArray<{ readonly achievement: string | null, readonly endDate: string | null, readonly school: string | null, readonly startDate: string | null }> | null, readonly jobExperience: ReadonlyArray<{ readonly company: string | null, readonly duties: ReadonlyArray<string> | null, readonly endDate: string | null, readonly startDate: string | null, readonly title: string | null }> | null, readonly projects: ReadonlyArray<{ readonly description: string | null, readonly url: ReadonlyArray<string | null> | null, readonly name: string | null, readonly startDate: string | null, readonly endDate: string | null }> | null } | null };
 
 type ResumeProjectFragment = { readonly description: string | null, readonly url: ReadonlyArray<string | null> | null, readonly name: string | null, readonly startDate: string | null, readonly endDate: string | null };
 
-type ResumeViewFragment = { readonly careerObjective: string | null, readonly company: string | null, readonly summary: string | null, readonly skills: ReadonlyArray<string> | null, readonly applicant: { readonly childApplicantsJson: { readonly name: string | null, readonly phone: string | null, readonly email: string | null, readonly address: string | null, readonly github: string | null, readonly linkedin: string | null } | null }, readonly education: ReadonlyArray<{ readonly achievement: string | null, readonly endDate: string | null, readonly school: string | null, readonly startDate: string | null }> | null, readonly jobExperience: ReadonlyArray<{ readonly company: string | null, readonly duties: ReadonlyArray<string> | null, readonly endDate: string | null, readonly startDate: string | null, readonly title: string | null }> | null, readonly projects: ReadonlyArray<{ readonly description: string | null, readonly url: ReadonlyArray<string | null> | null, readonly name: string | null, readonly startDate: string | null, readonly endDate: string | null }> | null };
+type ResumeViewFragment = { readonly careerObjective: string | null, readonly company: string | null, readonly summary: string | null, readonly skills: ReadonlyArray<string> | null, readonly applicant: { readonly childApplicantsJson: { readonly name: string | null, readonly phone: string | null, readonly email: string | null, readonly address: string | null, readonly github: string | null, readonly linkedin: string | null, readonly website: string | null } | null }, readonly education: ReadonlyArray<{ readonly achievement: string | null, readonly endDate: string | null, readonly school: string | null, readonly startDate: string | null }> | null, readonly jobExperience: ReadonlyArray<{ readonly company: string | null, readonly duties: ReadonlyArray<string> | null, readonly endDate: string | null, readonly startDate: string | null, readonly title: string | null }> | null, readonly projects: ReadonlyArray<{ readonly description: string | null, readonly url: ReadonlyArray<string | null> | null, readonly name: string | null, readonly startDate: string | null, readonly endDate: string | null }> | null };
 
 
 }

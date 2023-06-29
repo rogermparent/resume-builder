@@ -28,6 +28,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
           address: "String",
           github: "String",
           linkedin: "String",
+          website: "String",
         },
         interfaces: ["Node"],
         extensions: {

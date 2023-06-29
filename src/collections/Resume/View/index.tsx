@@ -9,6 +9,7 @@ const ContactInfo = ({
   phone,
   github,
   linkedin,
+  website,
 }: Queries.ApplicantDataFragment) => {
   return (
     <div className={styles.contactList}>
@@ -31,6 +32,14 @@ const ContactInfo = ({
           <a href={`tel://${phone}`} className={styles.contactLink}>
             <span className={styles.contactIcon}>&#128379;</span>{" "}
             <span>{phone}</span>
+          </a>
+        </div>
+      )}
+      {website && (
+        <div className={styles.contactListItem}>
+          <a href={`https://${website}`} target="_blank">
+            <span className={styles.contactIcon}>&#128463;</span>{" "}
+            <span>{website}</span>
           </a>
         </div>
       )}
@@ -248,6 +257,7 @@ export const Resume = ({
     name = null,
     phone = null,
     linkedin = null,
+    website = null,
   } = childApplicantsJson || {}
   return (
     <div className={styles.resume}>
@@ -263,6 +273,7 @@ export const Resume = ({
                 address={address}
                 github={github}
                 linkedin={linkedin}
+                website={website}
               />
             </div>
             <Skills skills={skills} />

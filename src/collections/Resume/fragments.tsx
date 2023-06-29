@@ -29,6 +29,7 @@ export const query = graphql`
     address
     github
     linkedin
+    website
   }
 
   fragment ResumeEducation on ResumeEducation {
